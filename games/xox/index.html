@@ -30,21 +30,62 @@ padding:14px;overflow-x:hidden;overflow-y:auto}
 .draw-box{border:3px solid rgba(255,255,255,.2);color:#fff}
 .turn-box{width:85%;padding:11px;border-radius:18px;margin-bottom:14px;text-align:center;background:rgba(255,255,255,.04);border:2px solid rgba(122,92,255,.4)}
 .turn-box h2{font-size:clamp(1rem,4.5vw,1.2rem);color:var(--x)}
+
 .board{
-width:100%;aspect-ratio:1;position:relative;display:grid;
-grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);
-border:4px solid var(--board);border-radius:26px;overflow:hidden;
-background:rgba(122,92,255,.08);
-box-shadow:0 0 25px rgba(122,92,255,.35), inset 0 0 20px rgba(122,92,255,.15)}
-.board::before{
-content:"";position:absolute;inset:0;pointer-events:none;
-background:
-linear-gradient(to right,transparent 32.8%,rgba(122,92,255,.9) 32.8%,rgba(122,92,255,.9) 33.4%,transparent 33.4%,transparent 65.8%,rgba(122,92,255,.9) 65.8%,rgba(122,92,255,.9) 66.4%,transparent 66.4%),
-linear-gradient(to bottom,transparent 32.8%,rgba(122,92,255,.9) 32.8%,rgba(122,92,255,.9) 33.4%,transparent 33.4%,transparent 65.8%,rgba(122,92,255,.9) 65.8%,rgba(122,92,255,.9) 66.4%,transparent 66.4%)}
-.cell{display:flex;justify-content:center;align-items:center;font-size:clamp(2.5rem,12vw,4rem);font-weight:700;cursor:pointer;user-select:none;z-index:2}
+width:100%;
+aspect-ratio:1;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+grid-template-rows:repeat(3,1fr);
+position:relative;
+border-radius:22px;
+overflow:hidden;
+background:rgba(122,92,255,.04);
+min-height:280px;
+}
+
+.board::before{display:none;}
+
+.cell{
+width:100%;
+height:100%;
+min-height:90px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:clamp(2.6rem,12vw,4rem);
+font-weight:700;
+cursor:pointer;
+user-select:none;
+-webkit-user-select:none;
+touch-action:manipulation;
+position:relative;
+line-height:1;
+box-sizing:border-box;
+}
+
+/* draw grid lines INSIDE game */
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(4),
+.cell:nth-child(5),
+.cell:nth-child(7),
+.cell:nth-child(8){
+border-right:3px solid rgba(122,92,255,.9);
+}
+
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3),
+.cell:nth-child(4),
+.cell:nth-child(5),
+.cell:nth-child(6){
+border-bottom:3px solid rgba(122,92,255,.9);
+}
+
 .cell:active{transform:scale(.95)}
-.cell.x{color:var(--x);text-shadow:0 0 18px var(--x)}
-.cell.o{color:var(--o);text-shadow:0 0 18px var(--o)}
+.cell.x{color:var(--x);text-shadow:0 0 18px var(--x);display:flex;justify-content:center;align-items:center;}
+.cell.o{color:var(--o);text-shadow:0 0 18px var(--o);display:flex;justify-content:center;align-items:center;}
 .buttons{width:100%;margin-top:12px;display:flex;flex-direction:column;gap:14px}
 .btn{border:none;padding:clamp(12px,3vw,15px);border-radius:18px;color:#fff;font-size:1rem;font-weight:600}
 .new-game{background:linear-gradient(#006eff,#003ea5);border:2px solid #1ec7ff;box-shadow:0 0 20px rgba(0,191,255,.4)}
@@ -95,6 +136,10 @@ linear-gradient(to bottom,transparent 32.8%,rgba(122,92,255,.9) 32.8%,rgba(122,9
 <button id="playAgainBtn">Play Again</button>
 </div></div>
 
+
+
+
+
 <script>
 const cells=document.querySelectorAll(".cell");
 const turnText=document.getElementById("turnText");
@@ -108,78 +153,97 @@ const playAgainBtn=document.getElementById("playAgainBtn");
 const newGameBtn=document.getElementById("newGameBtn");
 const resetBtn=document.getElementById("resetBtn");
 
-let board=["","","","","","","","",""], currentPlayer="X", gameActive=true;
+let board = Array(9).fill("");
+let currentPlayer = "X";
+let gameActive = true;
 let xScore=0,oScore=0,drawScore=0;
 
 const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 
 function updateTurn(){
-turnText.textContent=currentPlayer+"'s Turn";
-turnText.style.color=currentPlayer==="X"?"#00bfff":"#ff2da0";
-}
-
-function showWinnerPopup(player){
-winnerPopup.classList.add("show");
-winnerIcon.textContent=player;
-winnerIcon.className="winner-icon "+player.toLowerCase();
-winnerText.textContent=player+" Wins The Match! 🎉";
+ turnText.textContent=`${currentPlayer}'s Turn`;
+ turnText.style.color=currentPlayer==="X"?"#00bfff":"#ff2da0";
 }
 
 function checkWinner(){
-for(const [a,b,c] of wins){
-if(board[a]&&board[a]===board[b]&&board[a]===board[c]){
-gameActive=false;
-if(board[a]==="X"){xScore++;xScoreText.textContent=xScore;}
-else{oScore++;oScoreText.textContent=oScore;}
-turnText.textContent=board[a]+" Wins 🎉";
-showWinnerPopup(board[a]);
-return;
-}}
-if(!board.includes("")){
-gameActive=false;
-drawScore++;
-drawScoreText.textContent=drawScore;
-turnText.textContent="Draw 🤝";
+ for(const [a,b,c] of wins){
+  if(board[a] && board[a]===board[b] && board[a]===board[c]){
+    gameActive=false;
+    if(board[a]==="X"){
+      xScore++; xScoreText.textContent=xScore;
+    } else {
+      oScore++; oScoreText.textContent=oScore;
+    }
+    turnText.textContent=`${board[a]} Wins 🎉`;
+    setTimeout(()=>{
+      winnerPopup.classList.add("show");
+      winnerIcon.textContent=board[a];
+      winnerIcon.className="winner-icon "+board[a].toLowerCase();
+      winnerText.textContent=`${board[a]} Wins The Match! 🎉`;
+    },150);
+    return true;
+  }
+ }
+ if(!board.includes("")){
+   gameActive=false;
+   drawScore++;
+   drawScoreText.textContent=drawScore;
+   turnText.textContent="Draw 🤝";
+   return true;
+ }
+ return false;
 }
+
+function playMove(cell){
+ if(!gameActive) return;
+ const index = Number(cell.dataset.index);
+ if(board[index] !== "") return;
+
+ board[index]=currentPlayer;
+ cell.textContent=currentPlayer;
+ cell.classList.add(currentPlayer.toLowerCase());
+
+ const over = checkWinner();
+ if(!over){
+   currentPlayer = currentPlayer==="X" ? "O" : "X";
+   updateTurn();
+ }
 }
 
 cells.forEach(cell=>{
-cell.addEventListener("click",()=>{
-const index=cell.dataset.index;
-if(board[index]||!gameActive)return;
-board[index]=currentPlayer;
-cell.textContent=currentPlayer;
-cell.classList.add(currentPlayer.toLowerCase());
-checkWinner();
-if(gameActive){
-currentPlayer=currentPlayer==="X"?"O":"X";
-updateTurn();
-}
-});
+ cell.addEventListener("click",(e)=>{
+   e.preventDefault();
+   playMove(cell);
+ });
 });
 
 function resetBoard(){
-board=["","","","","","","","",""];
-gameActive=true;
-currentPlayer="X";
-cells.forEach(c=>{c.textContent="";c.classList.remove("x","o");});
-updateTurn();
+ board=Array(9).fill("");
+ currentPlayer="X";
+ gameActive=true;
+ cells.forEach(c=>{
+  c.textContent="";
+  c.classList.remove("x","o");
+ });
+ winnerPopup.classList.remove("show");
+ updateTurn();
 }
 
-playAgainBtn.addEventListener("click",()=>{
-winnerPopup.classList.remove("show");
-resetBoard();
-});
+playAgainBtn.addEventListener("click",resetBoard);
 newGameBtn.addEventListener("click",resetBoard);
 resetBtn.addEventListener("click",()=>{
-xScore=oScore=drawScore=0;
-xScoreText.textContent=0;
-oScoreText.textContent=0;
-drawScoreText.textContent=0;
-winnerPopup.classList.remove("show");
-resetBoard();
+ xScore=oScore=drawScore=0;
+ xScoreText.textContent="0";
+ oScoreText.textContent="0";
+ drawScoreText.textContent="0";
+ resetBoard();
 });
+
 updateTurn();
 </script>
+
+
+
+
 </body>
 </html>
