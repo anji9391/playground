@@ -42,6 +42,9 @@ border-radius:22px;
 overflow:hidden;
 background:rgba(122,92,255,.04);
 min-height:280px;
+touch-action:none;
+-webkit-touch-callout:none;
+user-select:none;
 }
 
 .board::before{display:none;}
@@ -49,19 +52,20 @@ min-height:280px;
 .cell{
 width:100%;
 height:100%;
-min-height:90px;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:clamp(2.6rem,12vw,4rem);
 font-weight:700;
 cursor:pointer;
-user-select:none;
--webkit-user-select:none;
-touch-action:manipulation;
 position:relative;
 line-height:1;
-box-sizing:border-box;
+touch-action:none;
+pointer-events:auto;
+-webkit-user-select:none;
+user-select:none;
+z-index:10;
+background:transparent;
 }
 
 /* draw grid lines INSIDE game */
@@ -140,106 +144,234 @@ border-bottom:3px solid rgba(122,92,255,.9);
 
 
 
+
 <script>
-const cells=document.querySelectorAll(".cell");
-const turnText=document.getElementById("turnText");
-const xScoreText=document.getElementById("xScore");
-const oScoreText=document.getElementById("oScore");
-const drawScoreText=document.getElementById("drawScore");
-const winnerPopup=document.getElementById("winnerPopup");
-const winnerIcon=document.getElementById("winnerIcon");
-const winnerText=document.getElementById("winnerText");
-const playAgainBtn=document.getElementById("playAgainBtn");
-const newGameBtn=document.getElementById("newGameBtn");
-const resetBtn=document.getElementById("resetBtn");
+const boardEl = document.querySelector(".board");
+const cells = document.querySelectorAll(".cell");
+
+const turnText = document.getElementById("turnText");
+const xScoreText = document.getElementById("xScore");
+const oScoreText = document.getElementById("oScore");
+const drawScoreText = document.getElementById("drawScore");
+
+const winnerPopup = document.getElementById("winnerPopup");
+const winnerIcon = document.getElementById("winnerIcon");
+const winnerText = document.getElementById("winnerText");
+
+const playAgainBtn = document.getElementById("playAgainBtn");
+const newGameBtn = document.getElementById("newGameBtn");
+const resetBtn = document.getElementById("resetBtn");
 
 let board = Array(9).fill("");
 let currentPlayer = "X";
 let gameActive = true;
-let xScore=0,oScore=0,drawScore=0;
+let xScore = 0;
+let oScore = 0;
+let drawScore = 0;
 
-const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const wins = [
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
+];
 
 function updateTurn(){
- turnText.textContent=`${currentPlayer}'s Turn`;
- turnText.style.color=currentPlayer==="X"?"#00bfff":"#ff2da0";
+ turnText.textContent = currentPlayer + "'s Turn";
+ turnText.style.color =
+ currentPlayer === "X"
+ ? "#00bfff"
+ : "#ff2da0";
 }
 
 function checkWinner(){
  for(const [a,b,c] of wins){
-  if(board[a] && board[a]===board[b] && board[a]===board[c]){
-    gameActive=false;
-    if(board[a]==="X"){
-      xScore++; xScoreText.textContent=xScore;
-    } else {
-      oScore++; oScoreText.textContent=oScore;
-    }
-    turnText.textContent=`${board[a]} Wins 🎉`;
-    setTimeout(()=>{
-      winnerPopup.classList.add("show");
-      winnerIcon.textContent=board[a];
-      winnerIcon.className="winner-icon "+board[a].toLowerCase();
-      winnerText.textContent=`${board[a]} Wins The Match! 🎉`;
-    },150);
-    return true;
-  }
+
+   if(
+      board[a] &&
+      board[a] === board[b] &&
+      board[a] === board[c]
+   ){
+
+      gameActive = false;
+
+      if(board[a] === "X"){
+        xScore++;
+        xScoreText.textContent = xScore;
+      }else{
+        oScore++;
+        oScoreText.textContent = oScore;
+      }
+
+      turnText.textContent =
+      board[a] + " Wins 🎉";
+
+      setTimeout(() => {
+        winnerPopup.classList.add("show");
+        winnerIcon.textContent = board[a];
+        winnerIcon.className =
+        "winner-icon " +
+        board[a].toLowerCase();
+
+        winnerText.textContent =
+        board[a] +
+        " Wins The Match! 🎉";
+      },150);
+
+      return true;
+   }
  }
+
  if(!board.includes("")){
-   gameActive=false;
-   drawScore++;
-   drawScoreText.textContent=drawScore;
-   turnText.textContent="Draw 🤝";
-   return true;
+    gameActive = false;
+    drawScore++;
+    drawScoreText.textContent =
+    drawScore;
+
+    turnText.textContent =
+    "Draw 🤝";
+
+    return true;
  }
+
  return false;
 }
 
-function playMove(cell){
+function placeMove(index){
+
  if(!gameActive) return;
- const index = Number(cell.dataset.index);
+
+ if(index < 0 || index > 8) return;
+
  if(board[index] !== "") return;
 
- board[index]=currentPlayer;
- cell.textContent=currentPlayer;
- cell.classList.add(currentPlayer.toLowerCase());
+ board[index] = currentPlayer;
 
- const over = checkWinner();
- if(!over){
-   currentPlayer = currentPlayer==="X" ? "O" : "X";
+ const cell =
+ document.querySelector(
+ '.cell[data-index="' +
+ index + '"]'
+ );
+
+ cell.textContent =
+ currentPlayer;
+
+ cell.classList.add(
+ currentPlayer.toLowerCase()
+ );
+
+ const end =
+ checkWinner();
+
+ if(!end){
+   currentPlayer =
+   currentPlayer === "X"
+   ? "O"
+   : "X";
+
    updateTurn();
  }
 }
 
-cells.forEach(cell=>{
- cell.addEventListener("click",(e)=>{
-   e.preventDefault();
-   playMove(cell);
- });
-});
+/* ENTIRE GAME TOUCH AREA */
+
+boardEl.addEventListener(
+"pointerdown",
+(e)=>{
+
+ e.preventDefault();
+
+ const rect =
+ boardEl.getBoundingClientRect();
+
+ const x =
+ e.clientX - rect.left;
+
+ const y =
+ e.clientY - rect.top;
+
+ const col =
+ Math.min(
+ 2,
+ Math.floor(
+ x / (rect.width / 3)
+ )
+ );
+
+ const row =
+ Math.min(
+ 2,
+ Math.floor(
+ y / (rect.height / 3)
+ )
+ );
+
+ const index =
+ row * 3 + col;
+
+ placeMove(index);
+
+},
+{passive:false}
+);
 
 function resetBoard(){
- board=Array(9).fill("");
- currentPlayer="X";
- gameActive=true;
- cells.forEach(c=>{
-  c.textContent="";
-  c.classList.remove("x","o");
+
+ board =
+ Array(9).fill("");
+
+ currentPlayer = "X";
+ gameActive = true;
+
+ cells.forEach(cell=>{
+   cell.textContent = "";
+   cell.classList.remove(
+   "x","o"
+   );
  });
+
  winnerPopup.classList.remove("show");
+
  updateTurn();
 }
 
-playAgainBtn.addEventListener("click",resetBoard);
-newGameBtn.addEventListener("click",resetBoard);
-resetBtn.addEventListener("click",()=>{
- xScore=oScore=drawScore=0;
- xScoreText.textContent="0";
- oScoreText.textContent="0";
- drawScoreText.textContent="0";
+playAgainBtn.addEventListener(
+"click",
+resetBoard
+);
+
+newGameBtn.addEventListener(
+"click",
+resetBoard
+);
+
+resetBtn.addEventListener(
+"click",
+()=>{
+
+ xScore = 0;
+ oScore = 0;
+ drawScore = 0;
+
+ xScoreText.textContent =
+ "0";
+
+ oScoreText.textContent =
+ "0";
+
+ drawScoreText.textContent =
+ "0";
+
  resetBoard();
-});
+
+}
+);
 
 updateTurn();
 </script>
+
+
+
+
+
 </body>
 </html>
