@@ -155,15 +155,61 @@ button{
 
     body{
         overflow:auto;
+        align-items:flex-start;
+        padding:10px;
+    }
+
+    .container{
+        padding:8px;
+    }
+
+    .logo h1{
+        font-size:1.8rem;
+    }
+
+    .logo p{
+        font-size:13px;
+        margin-bottom:12px;
+    }
+
+    .stats{
+        gap:8px;
+        margin-bottom:12px;
+    }
+
+    .card{
+        min-width:95px;
+        padding:10px;
+    }
+
+    .card h3{
+        font-size:12px;
+    }
+
+    .card span{
+        font-size:18px;
     }
 
     .controls{
         display:block;
+        margin-top:14px;
     }
 
     .ctrl{
-        width:55px;
-        height:55px;
+        width:58px;
+        height:58px;
+        font-size:24px;
+    }
+
+    .game-wrapper{
+        width:100%;
+        display:flex;
+        justify-content:center;
+    }
+
+    canvas{
+        max-width:100%;
+        height:auto;
     }
 }
 </style>
@@ -339,15 +385,44 @@ const startSound = new Audio(
 
 function resizeCanvas(){
 
-const size =
-Math.min(
-window.innerWidth * 0.85,
-window.innerHeight * 0.65,
-700
-);
+    const isMobile =
+    window.innerWidth < 768;
 
-canvas.width = size;
-canvas.height = size;
+    let size;
+
+    if(isMobile){
+
+        // Mobile screen
+        size = Math.min(
+            window.innerWidth - 24,
+            window.innerHeight * 0.52
+        );
+
+    }else{
+
+        // Desktop / Laptop
+        size = Math.min(
+            window.innerWidth * 0.70,
+            window.innerHeight * 0.68,
+            720
+        );
+    }
+
+    // Make grid perfect
+    size =
+    Math.floor(size / box) * box;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    // keep overlay same size
+    const wrapper =
+    document.querySelector(
+    ".game-wrapper"
+    );
+
+    wrapper.style.width =
+    size + "px";
 }
 
 window.addEventListener(
