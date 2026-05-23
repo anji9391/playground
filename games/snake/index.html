@@ -2,14 +2,24 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Snake X</title>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Snake X Mobile</title>
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
 
 body{
@@ -17,77 +27,98 @@ body{
     background:
     linear-gradient(
     135deg,
-    #09111d,
+    #07111d,
     #10251c
     );
 
     color:white;
-    min-height:100vh;
+
+    position:fixed;
+    inset:0;
+
+    touch-action:none;
+    overscroll-behavior:none;
+
     display:flex;
     justify-content:center;
-    align-items:center;
-    overflow:hidden;
+    align-items:flex-start;
 }
 
 .container{
     width:100%;
-    max-width:1200px;
-    padding:15px;
+    max-width:500px;
+    height:100dvh;
+
+    display:flex;
+    flex-direction:column;
+
+    padding:8px;
+}
+
+.logo{
     text-align:center;
+    margin-bottom:8px;
 }
 
 .logo h1{
-    font-size:clamp(2rem,4vw,3rem);
-    color:#65ff8f;
+    color:#77ff99;
+    font-size:1.7rem;
 }
 
 .logo p{
     color:#b9b9b9;
-    margin-top:5px;
-    margin-bottom:20px;
+    font-size:12px;
 }
 
 .stats{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-bottom:15px;
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:8px;
+    margin-bottom:10px;
 }
 
 .card{
     background:#182434;
-    padding:14px 24px;
-    border-radius:14px;
-    min-width:130px;
+    border-radius:12px;
+    padding:8px;
+    text-align:center;
 }
 
 .card h3{
-    font-size:14px;
-    color:#65ff8f;
-    margin-bottom:8px;
+    color:#77ff99;
+    font-size:11px;
+    margin-bottom:4px;
 }
 
 .card span{
-    font-size:24px;
+    font-size:16px;
     font-weight:bold;
 }
 
 .game-wrapper{
+    flex:1;
     position:relative;
+
     display:flex;
     justify-content:center;
+    align-items:center;
 }
 
 canvas{
-    border:4px solid #45d86d;
-    border-radius:20px;
     background:
     linear-gradient(
     180deg,
-    #153220,
-    #0b1812
+    #14311f,
+    #0a1711
     );
+
+    border:4px solid #4ee276;
+    border-radius:18px;
+
+    max-width:100%;
+    max-height:100%;
 
     display:block;
 }
@@ -101,115 +132,92 @@ canvas{
     align-items:center;
     flex-direction:column;
 
-    background:transparent; /* removed black */
-
     pointer-events:none;
 }
 
-.overlay button{
-    pointer-events:auto;
-}
 .hidden{
     display:none;
 }
 
-.overlay h2{
-    margin-bottom:10px;
+.popup{
+    background:
+    rgba(18,28,39,.92);
+
+    padding:20px;
+    border-radius:18px;
+    text-align:center;
 }
 
-.overlay p{
-    margin-bottom:15px;
+.popup h2{
+    margin-bottom:8px;
+}
+
+.popup p{
+    margin-bottom:14px;
 }
 
 button{
     border:none;
-    background:#55e37c;
+    background:#59e580;
     color:black;
-    padding:12px 24px;
-    border-radius:10px;
     font-weight:bold;
+    padding:12px 22px;
+    border-radius:12px;
     cursor:pointer;
+    pointer-events:auto;
 }
 
 .controls{
-    margin-top:20px;
-    display:none;
+    margin-top:10px;
 }
 
-.row{
+.controls .top{
     display:flex;
     justify-content:center;
-    gap:10px;
+    margin-bottom:10px;
+}
+
+.controls .bottom{
+    display:flex;
+    justify-content:center;
+    gap:14px;
 }
 
 .ctrl{
-    width:60px;
-    height:60px;
-    border-radius:12px;
+    width:65px;
+    height:65px;
+
+    border:none;
+    border-radius:16px;
+
     background:#182434;
     color:white;
-    font-size:24px;
+    font-size:28px;
 }
 
-@media(max-width:768px){
-
-    body{
-        overflow:auto;
-        align-items:flex-start;
-        padding:10px;
-    }
+@media(min-width:768px){
 
     .container{
-        padding:8px;
+        max-width:900px;
+        padding:20px;
     }
 
     .logo h1{
-        font-size:1.8rem;
-    }
-
-    .logo p{
-        font-size:13px;
-        margin-bottom:12px;
+        font-size:2.3rem;
     }
 
     .stats{
-        gap:8px;
-        margin-bottom:12px;
+        display:flex;
+        justify-content:center;
+        gap:14px;
     }
 
     .card{
-        min-width:95px;
-        padding:10px;
-    }
-
-    .card h3{
-        font-size:12px;
-    }
-
-    .card span{
-        font-size:18px;
+        min-width:120px;
     }
 
     .controls{
-        display:block;
-        margin-top:14px;
-    }
-
-    .ctrl{
-        width:58px;
-        height:58px;
-        font-size:24px;
-    }
-
-    .game-wrapper{
-        width:100%;
-        display:flex;
-        justify-content:center;
-    }
-
-    canvas{
-        max-width:100%;
-        height:auto;
+        display:none;
     }
 }
 </style>
@@ -221,7 +229,7 @@ button{
 
 <div class="logo">
 <h1>🐍 Snake X</h1>
-<p>Modern Responsive Edition</p>
+<p>Mobile Optimized Edition</p>
 </div>
 
 <div class="stats">
@@ -232,7 +240,7 @@ button{
 </div>
 
 <div class="card">
-<h3>High Score</h3>
+<h3>High</h3>
 <span id="highScore">0</span>
 </div>
 
@@ -252,51 +260,78 @@ button{
 
 <canvas id="gameCanvas"></canvas>
 
-<div id="startScreen" class="overlay">
+<div
+id="startScreen"
+class="overlay">
+
+<div class="popup">
 <h2>🐍 Snake X</h2>
-<p>Press Arrow Key or WASD to Start</p>
+<p>Swipe or use controls</p>
 </div>
 
-<div id="gameOver" class="overlay hidden">
+</div>
+
+<div
+id="gameOver"
+class="overlay hidden">
+
+<div class="popup">
+
 <h2>💀 Game Over</h2>
-<p id="finalScore"></p>
-<button onclick="restartGame()">
+
+<p id="finalScore">
+Score: 0
+</p>
+
+<button
+onclick="restartGame()">
+
 Play Again
+
 </button>
+
+</div>
 </div>
 
 </div>
 
 <div class="controls">
 
-<button class="ctrl"
+<div class="top">
+
+<button
+class="ctrl"
 onclick="setDirection('UP')">
 ⬆
 </button>
 
-<div class="row">
+</div>
 
-<button class="ctrl"
+<div class="bottom">
+
+<button
+class="ctrl"
 onclick="setDirection('LEFT')">
 ⬅
 </button>
 
-<button class="ctrl"
+<button
+class="ctrl"
 onclick="setDirection('DOWN')">
 ⬇
 </button>
 
-<button class="ctrl"
+<button
+class="ctrl"
 onclick="setDirection('RIGHT')">
 ➡
 </button>
 
 </div>
-
 </div>
 
 <script>
-  const canvas =
+const canvas =
 document.getElementById(
 "gameCanvas"
 );
@@ -305,13 +340,19 @@ const ctx =
 canvas.getContext("2d");
 
 const scoreEl =
-document.getElementById("score");
+document.getElementById(
+"score"
+);
 
 const highScoreEl =
-document.getElementById("highScore");
+document.getElementById(
+"highScore"
+);
 
 const levelEl =
-document.getElementById("level");
+document.getElementById(
+"level"
+);
 
 const speedText =
 document.getElementById(
@@ -336,95 +377,71 @@ document.getElementById(
 const box = 20;
 
 let snake = [];
-let food = {};
 let direction = "RIGHT";
+let food = {};
 
 let score = 0;
 let level = 1;
-
 let speed = 140;
 let game = null;
-
 let started = false;
-let paused = false;
-
-let touchStartX = 0;
-let touchStartY = 0;
-
-let highScore =
-localStorage.getItem(
-"snakeHighScore"
-) || 0;
-
-highScoreEl.textContent =
-highScore;
 
 const fruits = [
 {emoji:"🍎",points:1},
 {emoji:"🍌",points:2},
 {emoji:"🍇",points:3},
-{emoji:"🍓",points:2},
-{emoji:"🥝",points:3},
-{emoji:"🍒",points:1}
+{emoji:"🍓",points:2}
 ];
-const eatSound = new Audio(
+
+const eatSound =
+new Audio(
 "https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
 );
 
-const gameOverSound = new Audio(
+const gameOverSound =
+new Audio(
 "https://assets.mixkit.co/active_storage/sfx/2220/2220-preview.mp3"
 );
 
-const levelSound = new Audio(
+const levelSound =
+new Audio(
 "https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
 );
 
-const startSound = new Audio(
-"https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3"
-);
+eatSound.volume=.2;
+gameOverSound.volume=.3;
+levelSound.volume=.2;
 
 function resizeCanvas(){
 
-    const isMobile =
-    window.innerWidth < 768;
+const mobile =
+window.innerWidth < 768;
 
-    let size;
+let size;
 
-    if(isMobile){
+if(mobile){
 
-        // Mobile screen
-        size = Math.min(
-            window.innerWidth - 24,
-            window.innerHeight * 0.52
-        );
+size = Math.min(
+window.innerWidth - 20,
+window.innerHeight - 320
+);
 
-    }else{
+}else{
 
-        // Desktop / Laptop
-        size = Math.min(
-            window.innerWidth * 0.70,
-            window.innerHeight * 0.68,
-            720
-        );
-    }
-
-    // Make grid perfect
-    size =
-    Math.floor(size / box) * box;
-
-    canvas.width = size;
-    canvas.height = size;
-
-    // keep overlay same size
-    const wrapper =
-    document.querySelector(
-    ".game-wrapper"
-    );
-
-    wrapper.style.width =
-    size + "px";
+size = Math.min(
+window.innerWidth * .55,
+window.innerHeight * .7,
+700
+);
 }
 
+size =
+Math.floor(size / box)
+* box;
+
+canvas.width = size;
+canvas.height = size;
+}
 window.addEventListener(
 "resize",
 resizeCanvas
@@ -451,8 +468,8 @@ Math.random() *
 }while(
 snake.some(
 s =>
-s.x === x &&
-s.y === y
+s.x===x &&
+s.y===y
 )
 );
 
@@ -464,7 +481,7 @@ fruits.length
 )
 ];
 
-return {
+return{
 x,
 y,
 emoji:fruit.emoji,
@@ -477,8 +494,10 @@ function startGame(){
 resizeCanvas();
 
 snake = [
-{x:box * 5, y:box * 5}
+{x:box*5,y:box*5}
 ];
+
+direction = "RIGHT";
 
 score = 0;
 level = 1;
@@ -493,7 +512,8 @@ level;
 speedText.textContent =
 "1x";
 
-food = createFood();
+food =
+createFood();
 
 startScreen.classList.add(
 "hidden"
@@ -504,11 +524,14 @@ gameOver.classList.add(
 );
 
 started = true;
-startSound.play();
+
 clearInterval(game);
 
 game =
-setInterval(draw,speed);
+setInterval(
+draw,
+speed
+);
 }
 
 function restartGame(){
@@ -585,67 +608,108 @@ if(
 setDirection("RIGHT");
 }
 
-if(key==="p"){
-
-paused = !paused;
-
-if(paused){
-
-clearInterval(game);
-
-}else{
-
-game =
-setInterval(draw,speed);
-}
-}
 });
+
+let startX = 0;
+let startY = 0;
 
 canvas.addEventListener(
 "touchstart",
 e=>{
 
-touchStartX =
+e.preventDefault();
+
+startX =
 e.touches[0].clientX;
 
-touchStartY =
+startY =
 e.touches[0].clientY;
-});
+
+},
+{passive:false}
+);
 
 canvas.addEventListener(
-"touchend",
+"touchmove",
 e=>{
 
+e.preventDefault();
+
 const dx =
-e.changedTouches[0]
-.clientX -
-touchStartX;
+e.touches[0].clientX
+- startX;
 
 const dy =
-e.changedTouches[0]
-.clientY -
-touchStartY;
+e.touches[0].clientY
+- startY;
 
 if(
 Math.abs(dx) >
 Math.abs(dy)
 ){
 
-if(dx > 0)
-setDirection("RIGHT");
+if(
+dx > 15 &&
+direction!=="LEFT"
+){
 
-else
-setDirection("LEFT");
+setDirection(
+"RIGHT"
+);
+
+startX =
+e.touches[0]
+.clientX;
+}
+
+if(
+dx < -15 &&
+direction!=="RIGHT"
+){
+
+setDirection(
+"LEFT"
+);
+
+startX =
+e.touches[0]
+.clientX;
+}
 
 }else{
 
-if(dy > 0)
-setDirection("DOWN");
+if(
+dy > 15 &&
+direction!=="UP"
+){
 
-else
-setDirection("UP");
+setDirection(
+"DOWN"
+);
+
+startY =
+e.touches[0]
+.clientY;
 }
-});
+
+if(
+dy < -15 &&
+direction!=="DOWN"
+){
+
+setDirection(
+"UP"
+);
+
+startY =
+e.touches[0]
+.clientY;
+}
+}
+
+},
+{passive:false}
+);
 
 function drawGrid(){
 
@@ -659,25 +723,19 @@ i+=box
 ){
 
 ctx.beginPath();
-
 ctx.moveTo(i,0);
-
 ctx.lineTo(
 i,
 canvas.height
 );
-
 ctx.stroke();
 
 ctx.beginPath();
-
 ctx.moveTo(0,i);
-
 ctx.lineTo(
 canvas.width,
 i
 );
-
 ctx.stroke();
 }
 }
@@ -712,12 +770,12 @@ part.x,
 part.y,
 box,
 box,
-8
+7
 );
 
 ctx.fillStyle =
 index===0
-? "#9eff70"
+? "#98ff78"
 : "#44d860";
 
 ctx.fill();
@@ -774,29 +832,37 @@ snakeY===food.y
 
 score +=
 food.points;
-eatSound.currentTime = 0;
+
+eatSound.currentTime =
+0;
+
 eatSound.play();
+
 scoreEl.textContent =
 score;
 
 food =
 createFood();
 
-if(score % 5 === 0){
+if(score % 5===0){
 
 level++;
+
 levelSound.play();
+
 levelEl.textContent =
 level;
 
 if(speed > 60){
 
-speed -= 8;
+speed -= 6;
 
 speedText.textContent =
 `${level}x`;
 
-clearInterval(game);
+clearInterval(
+game
+);
 
 game =
 setInterval(
@@ -807,7 +873,6 @@ speed
 }
 
 }else{
-
 snake.pop();
 }
 
@@ -836,12 +901,20 @@ part.y===snakeY
 ){
 
 clearInterval(game);
+
 gameOverSound.play();
+
 started = false;
 
-if(score > highScore){
-
-highScore = score;
+const highScore =
+Math.max(
+score,
+Number(
+localStorage.getItem(
+"snakeHighScore"
+) || 0
+)
+);
 
 localStorage.setItem(
 "snakeHighScore",
@@ -850,10 +923,9 @@ highScore
 
 highScoreEl.textContent =
 highScore;
-}
 
 finalScore.textContent =
-`Your Score: ${score}`;
+`Score: ${score}`;
 
 gameOver.classList.remove(
 "hidden"
@@ -867,5 +939,6 @@ snake.unshift(head);
 
 resizeCanvas();
 </script>
+
 </body>
 </html>
