@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
+  <title>Neon Chess</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="game-container">
+
+  <!-- TOP -->
+  <div class="top-bar">
+
+    <h1 class="game-title">
+      NEON CHESS
+    </h1>
+
+    <div class="game-controls">
+
+      <select id="modeSelect">
+        <option value="pvp">
+          2 Players
+        </option>
+
+        <option value="bot">
+          Play vs Bot
+        </option>
+      </select>
+
+      <select id="difficultySelect">
+        <option value="easy">
+          Easy Bot
+        </option>
+
+        <option value="medium">
+          Medium Bot
+        </option>
+
+        <option value="hard">
+          Hard Bot
+        </option>
+      </select>
+
+    </div>
+
+  </div>
+
+  <!-- STATUS -->
+  <div class="status-panel">
+
+    <div id="turnIndicator">
+      White's Turn
+    </div>
+
+    <button id="resetBtn">
+      Reset Game
+    </button>
+
+  </div>
+
+  <!-- BOARD -->
+  <div class="board-wrapper">
+    <div id="chessboard"></div>
+  </div>
+
+  <!-- CAPTURED -->
+  <div class="captured-container">
+
+    <div class="captured-box">
+
+      <h3>
+        White Captured
+      </h3>
+
+      <div id="whiteCaptured"></div>
+
+    </div>
+
+    <div class="captured-box">
+
+      <h3>
+        Black Captured
+      </h3>
+
+      <div id="blackCaptured"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
