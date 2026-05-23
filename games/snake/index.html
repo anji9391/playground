@@ -1,28 +1,796 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <title>Classic Snake</title>
-    <link rel="stylesheet" href="../../shared/game-shell.css" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body class="has-hud">
-    <div class="game-bar">
-      <a href="../../index.html">← Lobby</a>
-      <span class="title">Classic Snake</span>
-      <span class="score" id="score">0</span>
-    </div>
-    <div class="controls-bar" data-game-hud></div>
-    <div class="snake-wrap">
-      <canvas id="game" width="400" height="400"></canvas>
-    </div>
-    <p class="hint">Arrow keys or WASD · P to pause</p>
-    <div id="overlay" class="overlay hidden">
-      <h2>Game Over</h2>
-      <p id="overlay-msg">You crashed!</p>
-      <button type="button" class="btn btn-primary" id="restart">Play again</button>
-    </div>
-    <script type="module" src="game.js"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake X</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:
+    linear-gradient(
+    135deg,
+    #09111d,
+    #10251c
+    );
+
+    color:white;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:1200px;
+    padding:15px;
+    text-align:center;
+}
+
+.logo h1{
+    font-size:clamp(2rem,4vw,3rem);
+    color:#65ff8f;
+}
+
+.logo p{
+    color:#b9b9b9;
+    margin-top:5px;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.card{
+    background:#182434;
+    padding:14px 24px;
+    border-radius:14px;
+    min-width:130px;
+}
+
+.card h3{
+    font-size:14px;
+    color:#65ff8f;
+    margin-bottom:8px;
+}
+
+.card span{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.game-wrapper{
+    position:relative;
+    display:flex;
+    justify-content:center;
+}
+
+canvas{
+    border:4px solid #45d86d;
+    border-radius:20px;
+    background:
+    linear-gradient(
+    180deg,
+    #153220,
+    #0b1812
+    );
+
+    display:block;
+}
+
+.overlay{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    background:transparent; /* removed black */
+
+    pointer-events:none;
+}
+
+.overlay button{
+    pointer-events:auto;
+}
+.hidden{
+    display:none;
+}
+
+.overlay h2{
+    margin-bottom:10px;
+}
+
+.overlay p{
+    margin-bottom:15px;
+}
+
+button{
+    border:none;
+    background:#55e37c;
+    color:black;
+    padding:12px 24px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.controls{
+    margin-top:20px;
+    display:none;
+}
+
+.row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.ctrl{
+    width:60px;
+    height:60px;
+    border-radius:12px;
+    background:#182434;
+    color:white;
+    font-size:24px;
+}
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .controls{
+        display:block;
+    }
+
+    .ctrl{
+        width:55px;
+        height:55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+<h1>🐍 Snake X</h1>
+<p>Modern Responsive Edition</p>
+</div>
+
+<div class="stats">
+
+<div class="card">
+<h3>Score</h3>
+<span id="score">0</span>
+</div>
+
+<div class="card">
+<h3>High Score</h3>
+<span id="highScore">0</span>
+</div>
+
+<div class="card">
+<h3>Level</h3>
+<span id="level">1</span>
+</div>
+
+<div class="card">
+<h3>Speed</h3>
+<span id="speedText">1x</span>
+</div>
+
+</div>
+
+<div class="game-wrapper">
+
+<canvas id="gameCanvas"></canvas>
+
+<div id="startScreen" class="overlay">
+<h2>🐍 Snake X</h2>
+<p>Press Arrow Key or WASD to Start</p>
+</div>
+
+<div id="gameOver" class="overlay hidden">
+<h2>💀 Game Over</h2>
+<p id="finalScore"></p>
+<button onclick="restartGame()">
+Play Again
+</button>
+</div>
+
+</div>
+
+<div class="controls">
+
+<button class="ctrl"
+onclick="setDirection('UP')">
+⬆
+</button>
+
+<div class="row">
+
+<button class="ctrl"
+onclick="setDirection('LEFT')">
+⬅
+</button>
+
+<button class="ctrl"
+onclick="setDirection('DOWN')">
+⬇
+</button>
+
+<button class="ctrl"
+onclick="setDirection('RIGHT')">
+➡
+</button>
+
+</div>
+
+</div>
+
+<script>
+  const canvas =
+document.getElementById(
+"gameCanvas"
+);
+
+const ctx =
+canvas.getContext("2d");
+
+const scoreEl =
+document.getElementById("score");
+
+const highScoreEl =
+document.getElementById("highScore");
+
+const levelEl =
+document.getElementById("level");
+
+const speedText =
+document.getElementById(
+"speedText"
+);
+
+const startScreen =
+document.getElementById(
+"startScreen"
+);
+
+const gameOver =
+document.getElementById(
+"gameOver"
+);
+
+const finalScore =
+document.getElementById(
+"finalScore"
+);
+
+const box = 20;
+
+let snake = [];
+let food = {};
+let direction = "RIGHT";
+
+let score = 0;
+let level = 1;
+
+let speed = 140;
+let game = null;
+
+let started = false;
+let paused = false;
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+let highScore =
+localStorage.getItem(
+"snakeHighScore"
+) || 0;
+
+highScoreEl.textContent =
+highScore;
+
+const fruits = [
+{emoji:"🍎",points:1},
+{emoji:"🍌",points:2},
+{emoji:"🍇",points:3},
+{emoji:"🍓",points:2},
+{emoji:"🥝",points:3},
+{emoji:"🍒",points:1}
+];
+const eatSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"
+);
+
+const gameOverSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/2220/2220-preview.mp3"
+);
+
+const levelSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"
+);
+
+const startSound = new Audio(
+"https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3"
+);
+
+function resizeCanvas(){
+
+const size =
+Math.min(
+window.innerWidth * 0.85,
+window.innerHeight * 0.65,
+700
+);
+
+canvas.width = size;
+canvas.height = size;
+}
+
+window.addEventListener(
+"resize",
+resizeCanvas
+);
+
+function createFood(){
+
+let x,y;
+
+do{
+
+x =
+Math.floor(
+Math.random() *
+(canvas.width / box)
+) * box;
+
+y =
+Math.floor(
+Math.random() *
+(canvas.height / box)
+) * box;
+
+}while(
+snake.some(
+s =>
+s.x === x &&
+s.y === y
+)
+);
+
+const fruit =
+fruits[
+Math.floor(
+Math.random() *
+fruits.length
+)
+];
+
+return {
+x,
+y,
+emoji:fruit.emoji,
+points:fruit.points
+};
+}
+
+function startGame(){
+
+resizeCanvas();
+
+snake = [
+{x:box * 5, y:box * 5}
+];
+
+score = 0;
+level = 1;
+speed = 140;
+
+scoreEl.textContent =
+score;
+
+levelEl.textContent =
+level;
+
+speedText.textContent =
+"1x";
+
+food = createFood();
+
+startScreen.classList.add(
+"hidden"
+);
+
+gameOver.classList.add(
+"hidden"
+);
+
+started = true;
+startSound.play();
+clearInterval(game);
+
+game =
+setInterval(draw,speed);
+}
+
+function restartGame(){
+startGame();
+}
+
+function setDirection(dir){
+
+if(
+dir==="LEFT" &&
+direction!=="RIGHT"
+){
+direction="LEFT";
+}
+
+if(
+dir==="RIGHT" &&
+direction!=="LEFT"
+){
+direction="RIGHT";
+}
+
+if(
+dir==="UP" &&
+direction!=="DOWN"
+){
+direction="UP";
+}
+
+if(
+dir==="DOWN" &&
+direction!=="UP"
+){
+direction="DOWN";
+}
+
+if(!started){
+startGame();
+}
+}
+
+document.addEventListener(
+"keydown",
+e=>{
+
+const key =
+e.key.toLowerCase();
+
+if(
+["arrowup","w"]
+.includes(key)
+){
+setDirection("UP");
+}
+
+if(
+["arrowdown","s"]
+.includes(key)
+){
+setDirection("DOWN");
+}
+
+if(
+["arrowleft","a"]
+.includes(key)
+){
+setDirection("LEFT");
+}
+
+if(
+["arrowright","d"]
+.includes(key)
+){
+setDirection("RIGHT");
+}
+
+if(key==="p"){
+
+paused = !paused;
+
+if(paused){
+
+clearInterval(game);
+
+}else{
+
+game =
+setInterval(draw,speed);
+}
+}
+});
+
+canvas.addEventListener(
+"touchstart",
+e=>{
+
+touchStartX =
+e.touches[0].clientX;
+
+touchStartY =
+e.touches[0].clientY;
+});
+
+canvas.addEventListener(
+"touchend",
+e=>{
+
+const dx =
+e.changedTouches[0]
+.clientX -
+touchStartX;
+
+const dy =
+e.changedTouches[0]
+.clientY -
+touchStartY;
+
+if(
+Math.abs(dx) >
+Math.abs(dy)
+){
+
+if(dx > 0)
+setDirection("RIGHT");
+
+else
+setDirection("LEFT");
+
+}else{
+
+if(dy > 0)
+setDirection("DOWN");
+
+else
+setDirection("UP");
+}
+});
+
+function drawGrid(){
+
+ctx.strokeStyle =
+"rgba(255,255,255,.03)";
+
+for(
+let i=0;
+i<canvas.width;
+i+=box
+){
+
+ctx.beginPath();
+
+ctx.moveTo(i,0);
+
+ctx.lineTo(
+i,
+canvas.height
+);
+
+ctx.stroke();
+
+ctx.beginPath();
+
+ctx.moveTo(0,i);
+
+ctx.lineTo(
+canvas.width,
+i
+);
+
+ctx.stroke();
+}
+}
+
+function draw(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+drawGrid();
+
+ctx.font =
+"20px Arial";
+
+ctx.fillText(
+food.emoji,
+food.x + 2,
+food.y + 18
+);
+
+snake.forEach(
+(part,index)=>{
+
+ctx.beginPath();
+
+ctx.roundRect(
+part.x,
+part.y,
+box,
+box,
+8
+);
+
+ctx.fillStyle =
+index===0
+? "#9eff70"
+: "#44d860";
+
+ctx.fill();
+
+if(index===0){
+
+ctx.fillStyle =
+"black";
+
+ctx.beginPath();
+
+ctx.arc(
+part.x+6,
+part.y+7,
+2,
+0,
+Math.PI*2
+);
+
+ctx.arc(
+part.x+14,
+part.y+7,
+2,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+}
+});
+
+let snakeX =
+snake[0].x;
+
+let snakeY =
+snake[0].y;
+
+if(direction==="LEFT")
+snakeX -= box;
+
+if(direction==="RIGHT")
+snakeX += box;
+
+if(direction==="UP")
+snakeY -= box;
+
+if(direction==="DOWN")
+snakeY += box;
+
+if(
+snakeX===food.x &&
+snakeY===food.y
+){
+
+score +=
+food.points;
+eatSound.currentTime = 0;
+eatSound.play();
+scoreEl.textContent =
+score;
+
+food =
+createFood();
+
+if(score % 5 === 0){
+
+level++;
+levelSound.play();
+levelEl.textContent =
+level;
+
+if(speed > 60){
+
+speed -= 8;
+
+speedText.textContent =
+`${level}x`;
+
+clearInterval(game);
+
+game =
+setInterval(
+draw,
+speed
+);
+}
+}
+
+}else{
+
+snake.pop();
+}
+
+const head = {
+x:snakeX,
+y:snakeY
+};
+
+if(
+
+snakeX < 0 ||
+snakeY < 0 ||
+
+snakeX >=
+canvas.width ||
+
+snakeY >=
+canvas.height ||
+
+snake.some(
+part =>
+part.x===snakeX &&
+part.y===snakeY
+)
+
+){
+
+clearInterval(game);
+gameOverSound.play();
+started = false;
+
+if(score > highScore){
+
+highScore = score;
+
+localStorage.setItem(
+"snakeHighScore",
+highScore
+);
+
+highScoreEl.textContent =
+highScore;
+}
+
+finalScore.textContent =
+`Your Score: ${score}`;
+
+gameOver.classList.remove(
+"hidden"
+);
+
+return;
+}
+
+snake.unshift(head);
+}
+
+resizeCanvas();
+</script>
+</body>
 </html>
