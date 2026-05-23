@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Whack Rush</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Whack Rush</span>
+      <span class="score" id="timer">30s</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <div class="game-main">
+      <div class="holes" id="holes"></div>
+    </div>
+    <div id="overlay" class="overlay hidden">
+      <h2>Time's up!</h2>
+      <p id="finalScore">Score: 0</p>
+      <button type="button" class="btn btn-primary" id="again">Play again</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

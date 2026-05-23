@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>XOX — Tic Tac Toe</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">XOX</span>
+
+      <span class="score"></span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div class="game-main xox-app">
+
+      <a class="games-link btn btn-primary" href="../../index.html">🎮 Games</a>
+
+      <h1 class="xox-title">XOX</h1>
+
+      <p class="xox-sub">Tic Tac Toe</p>
+
+
+
+      <div class="scoreboard">
+
+        <div class="score-box x"><span class="label">X</span><span class="val" id="sx">0</span></div>
+
+        <div class="score-box draw"><span class="label">DRAW</span><span class="val" id="sd">0</span></div>
+
+        <div class="score-box o"><span class="label">O</span><span class="val" id="so">0</span></div>
+
+      </div>
+
+
+
+      <p class="turn" id="turn">X's turn</p>
+
+      <div class="board" id="board"></div>
+
+
+
+      <div class="actions">
+
+        <button type="button" class="btn btn-primary" id="newGame">New Game</button>
+
+        <button type="button" class="btn btn-ghost" id="resetScores">Reset Scores</button>
+
+      </div>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+

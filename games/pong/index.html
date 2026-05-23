@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Neon Pong</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>body { background: #422006; }</style>
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Neon Pong</span>
+      <span class="score" id="score">0 - 0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <p class="hint">P1: W/S · P2: ↑/↓</p>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+body {
+  background: #4a044e;
+  overflow: auto;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(64px, 1fr));
+  gap: 0.75rem;
+  max-width: 420px;
+  margin: 4rem auto 2rem;
+  padding: 1rem;
+}
+
+.card-btn {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.75rem;
+  cursor: pointer;
+  background: linear-gradient(145deg, #a21caf, #701a75);
+  color: transparent;
+  transition: transform 0.15s, background 0.2s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.card-btn.flipped,
+.card-btn.matched {
+  background: #fdf4ff;
+  color: #1e1b4b;
+  transform: scale(1.03);
+}
+
+.card-btn.matched {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.card-btn:disabled:not(.flipped) {
+  cursor: default;
+}

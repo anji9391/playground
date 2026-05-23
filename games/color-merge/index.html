@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Color Merge</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <style>
+      body { background: #2e1065; }
+      #game { cursor: pointer; }
+    </style>
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Color Merge</span>
+      <span class="score" id="score">2</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <div id="overlay" class="overlay hidden">
+      <h2>You win!</h2>
+      <p>You merged all the way to rainbow.</p>
+      <button type="button" class="btn btn-primary" id="restart">Play again</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

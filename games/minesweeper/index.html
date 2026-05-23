@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <title>Minesweeper</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">Minesweeper</span>
+
+      <span class="score" id="minesLeft">10 mines</span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div class="game-main">
+
+      <button type="button" class="btn btn-primary" id="newGame">New game</button>
+
+      <div class="grid" id="grid"></div>
+
+    </div>
+
+    <p class="hint">Left click reveal · Right click flag</p>
+
+    <div id="overlay" class="overlay hidden">
+
+      <h2 id="resultTitle">You win!</h2>
+
+      <button type="button" class="btn btn-primary" id="again">Play again</button>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Meteor Dodge</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Meteor Dodge</span>
+      <span class="score" id="score">0.0s</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <p class="hint">← → or A/D to dodge</p>
+    <div id="overlay" class="overlay">
+      <h2>Meteor Dodge</h2>
+      <p>Survive the meteor shower!</p>
+      <button type="button" class="btn btn-primary" id="start">Start</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

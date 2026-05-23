@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Memory Match</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">Memory Match</span>
+
+      <span class="score" id="moves">0 moves</span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div id="board" class="board"></div>
+
+    <div id="overlay" class="overlay hidden">
+
+      <h2>Nice!</h2>
+
+      <p id="win-msg">You matched all pairs.</p>
+
+      <button type="button" id="restart">Play again</button>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+

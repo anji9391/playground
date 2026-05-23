@@ -1,0 +1,91 @@
+.panel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.scores {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.scores .box {
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 0.4rem 0.75rem;
+  text-align: center;
+  min-width: 70px;
+}
+
+.scores .box span {
+  display: block;
+  font-size: 0.65rem;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.scores .box strong {
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.board-wrap {
+  position: relative;
+  width: min(92vw, 360px);
+  aspect-ratio: 1;
+  border-radius: 12px;
+  padding: 10px;
+  background: #1e293b;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.grid-bg,
+.grid-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 10px;
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+}
+
+.cell-bg {
+  background: #334155;
+  border-radius: 8px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: clamp(1rem, 5vw, 1.6rem);
+  transition: transform 0.12s ease, background 0.15s;
+  animation: pop 0.15s ease;
+}
+
+@keyframes pop {
+  from { transform: scale(0.85); }
+  to { transform: scale(1); }
+}
+
+.tile-2 { background: #e2e8f0; color: #0f172a; }
+.tile-4 { background: #cbd5e1; color: #0f172a; }
+.tile-8 { background: #f59e0b; color: #fff; }
+.tile-16 { background: #f97316; color: #fff; }
+.tile-32 { background: #ef4444; color: #fff; }
+.tile-64 { background: #dc2626; color: #fff; }
+.tile-128 { background: #a855f7; color: #fff; font-size: 1.2rem; }
+.tile-256 { background: #9333ea; color: #fff; font-size: 1.2rem; }
+.tile-512 { background: #7c3aed; color: #fff; font-size: 1.1rem; }
+.tile-1024 { background: #6366f1; color: #fff; font-size: 0.95rem; }
+.tile-2048 { background: #2dd4bf; color: #042f2e; font-size: 0.95rem; }
+.tile-super { background: #14b8a6; color: #042f2e; font-size: 0.8rem; }

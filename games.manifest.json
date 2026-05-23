@@ -1,0 +1,164 @@
+{
+  "games": [
+    {
+      "id": "snake",
+      "title": "Classic Snake",
+      "description": "Eat cherries, grow longer. Smooth arcade snake.",
+      "path": "games/snake/index.html",
+      "tags": ["arcade", "classic"],
+      "color": "#16a34a"
+    },
+    {
+      "id": "xox",
+      "title": "XOX",
+      "description": "Tic Tac Toe with scoreboard. X vs O.",
+      "path": "games/xox/index.html",
+      "tags": ["board", "multiplayer"],
+      "color": "#2dd4bf"
+    },
+    {
+      "id": "chess",
+      "title": "Chess",
+      "description": "Full board chess. Two players, legal moves.",
+      "path": "games/chess/index.html",
+      "tags": ["board", "strategy"],
+      "color": "#78716c"
+    },
+    {
+      "id": "carrom",
+      "title": "Carrom Board",
+      "description": "Real carrom board. Drag striker, pocket coins and the red queen.",
+      "path": "games/carrom/index.html",
+      "tags": ["board", "physics"],
+      "color": "#d97706"
+    },
+    {
+      "id": "flappy",
+      "title": "Sky Flap",
+      "description": "Tap to fly through the gaps.",
+      "path": "games/flappy/index.html",
+      "tags": ["arcade", "hyper-casual"],
+      "color": "#38bdf8"
+    },
+    {
+      "id": "game-2048",
+      "title": "2048",
+      "description": "Slide tiles. Combine numbers to reach 2048.",
+      "path": "games/game-2048/index.html",
+      "tags": ["puzzle"],
+      "color": "#eab308"
+    },
+    {
+      "id": "connect-four",
+      "title": "Connect Four",
+      "description": "Drop discs. Connect four in a row to win.",
+      "path": "games/connect-four/index.html",
+      "tags": ["board", "multiplayer"],
+      "color": "#ef4444"
+    },
+    {
+      "id": "minesweeper",
+      "title": "Minesweeper",
+      "description": "Clear the field. Avoid hidden mines.",
+      "path": "games/minesweeper/index.html",
+      "tags": ["puzzle", "classic"],
+      "color": "#64748b"
+    },
+    {
+      "id": "simon",
+      "title": "Simon Says",
+      "description": "Repeat the color sequence. How far can you go?",
+      "path": "games/simon/index.html",
+      "tags": ["memory", "arcade"],
+      "color": "#8b5cf6"
+    },
+    {
+      "id": "whack",
+      "title": "Whack Rush",
+      "description": "Hit the moles before they hide. Beat the clock.",
+      "path": "games/whack/index.html",
+      "tags": ["arcade", "hyper-casual"],
+      "color": "#84cc16"
+    },
+    {
+      "id": "space-shooter",
+      "title": "Star Blaster",
+      "description": "Dodge and shoot waves of alien invaders.",
+      "path": "games/space-shooter/index.html",
+      "tags": ["arcade", "action"],
+      "color": "#6366f1"
+    },
+    {
+      "id": "sliding-puzzle",
+      "title": "Slide Puzzle",
+      "description": "Slide tiles into order. 15-puzzle challenge.",
+      "path": "games/sliding-puzzle/index.html",
+      "tags": ["puzzle"],
+      "color": "#06b6d4"
+    },
+    {
+      "id": "reaction",
+      "title": "Reaction",
+      "description": "Click when the screen turns green. Test your reflexes.",
+      "path": "games/reaction/index.html",
+      "tags": ["arcade", "hyper-casual"],
+      "color": "#22c55e"
+    },
+    {
+      "id": "rps",
+      "title": "Rock Paper Scissors",
+      "description": "Beat the computer. Best of quick rounds.",
+      "path": "games/rps/index.html",
+      "tags": ["arcade", "casual"],
+      "color": "#f97316"
+    },
+    {
+      "id": "meteor-dodge",
+      "title": "Meteor Dodge",
+      "description": "Move side to side. Survive the falling rocks.",
+      "path": "games/meteor-dodge/index.html",
+      "tags": ["arcade", "action"],
+      "color": "#dc2626"
+    },
+    {
+      "id": "tap-dash",
+      "title": "Tap Dash",
+      "description": "Tap or press space to jump over obstacles.",
+      "path": "games/tap-dash/index.html",
+      "tags": ["runner", "hyper-casual"],
+      "color": "#f97316"
+    },
+    {
+      "id": "color-merge",
+      "title": "Color Merge",
+      "description": "Merge matching tiles to reach the rainbow tile.",
+      "path": "games/color-merge/index.html",
+      "tags": ["puzzle", "merge"],
+      "color": "#a855f7"
+    },
+    {
+      "id": "brick-breaker",
+      "title": "Brick Breaker",
+      "description": "Move the paddle. Break all the bricks.",
+      "path": "games/brick-breaker/index.html",
+      "tags": ["arcade", "classic"],
+      "color": "#0ea5e9"
+    },
+    {
+      "id": "memory-match",
+      "title": "Memory Match",
+      "description": "Flip cards and find matching pairs.",
+      "path": "games/memory-match/index.html",
+      "tags": ["puzzle", "memory"],
+      "color": "#ec4899"
+    },
+    {
+      "id": "pong",
+      "title": "Neon Pong",
+      "description": "Two-player paddle duel. First to 5 wins.",
+      "path": "games/pong/index.html",
+      "tags": ["arcade", "multiplayer"],
+      "color": "#eab308"
+    }
+  ]
+}

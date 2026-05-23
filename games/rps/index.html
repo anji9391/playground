@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Rock Paper Scissors</span>
+      <span class="score" id="hudBar">0 – 0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <div class="game-main">
+      <div class="scoreboard">
+        <div><span>You</span><strong id="you">0</strong></div>
+        <div><span>CPU</span><strong id="cpu">0</strong></div>
+      </div>
+      <p class="battle" id="battle">Choose your move</p>
+      <div class="choices">
+        <button type="button" class="btn btn-ghost pick" data-pick="rock">🪨 Rock</button>
+        <button type="button" class="btn btn-ghost pick" data-pick="paper">📄 Paper</button>
+        <button type="button" class="btn btn-ghost pick" data-pick="scissors">✂️ Scissors</button>
+      </div>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <title>Connect Four</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">Connect Four</span>
+
+      <span class="score" id="turnHud">Red's turn</span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div class="game-main">
+
+      <p class="status" id="status">Red vs Yellow — tap a column</p>
+
+      <div class="board" id="board"></div>
+
+      <button type="button" class="btn btn-primary" id="reset">New game</button>
+
+    </div>
+
+    <div id="overlay" class="overlay hidden">
+
+      <h2 id="winTitle">Red wins!</h2>
+
+      <p id="winMsg"></p>
+
+      <button type="button" class="btn btn-primary" id="playAgain">Play again</button>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+

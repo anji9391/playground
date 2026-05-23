@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <title>Slide Puzzle</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">Slide Puzzle</span>
+
+      <span class="score" id="moves">0 moves</span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div class="game-main">
+
+      <div class="board" id="board"></div>
+
+      <button type="button" class="btn btn-primary" id="shuffle">Shuffle</button>
+
+    </div>
+
+    <p class="hint">Tap a tile next to the empty space</p>
+
+    <div id="overlay" class="overlay hidden">
+
+      <h2>Solved!</h2>
+
+      <p id="winMsg">Great job!</p>
+
+      <button type="button" class="btn btn-primary" id="again">Play again</button>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+

@@ -1,0 +1,38 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: min(92vw, 320px);
+  padding: 10px;
+  background: #1e293b;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.tile {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+  color: #042f2e;
+  font-weight: 800;
+  font-size: clamp(1rem, 5vw, 1.4rem);
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.12s ease, opacity 0.12s;
+}
+
+.tile:hover:not(:disabled) {
+  transform: scale(1.03);
+  filter: brightness(1.08);
+}
+
+.tile.empty {
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+
+.tile:disabled {
+  cursor: default;
+}

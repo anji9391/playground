@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Brick Breaker</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <style>body { background: #0c4a6e; }</style>
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Brick Breaker</span>
+      <span class="score" id="score">0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <div id="overlay" class="overlay hidden">
+      <h2 id="msg">You win!</h2>
+      <p>Arrow keys or move mouse to steer the paddle.</p>
+      <button type="button" class="btn btn-primary" id="restart">Play again</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

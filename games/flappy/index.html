@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Sky Flap</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Sky Flap</span>
+      <span class="score" id="score">0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <p class="hint">Tap or Space to flap</p>
+    <div id="overlay" class="overlay">
+      <h2>Sky Flap</h2>
+      <p>Fly through the gaps. Don’t hit the pipes!</p>
+      <button type="button" class="btn btn-primary" id="start">Start</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

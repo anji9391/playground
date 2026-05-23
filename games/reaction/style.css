@@ -1,0 +1,46 @@
+.arena {
+  width: min(92vw, 400px);
+  height: min(50vh, 320px);
+  border: none;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s;
+  color: #0f172a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.arena.waiting {
+  background: #dc2626;
+  color: #fff;
+}
+
+.arena.ready {
+  background: #22c55e;
+  color: #042f2e;
+}
+
+.arena.idle {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.arena.too-soon {
+  background: #f59e0b;
+  color: #422006;
+}
+
+.result {
+  margin: 1rem 0;
+  font-size: 1.1rem;
+  color: #94a3b8;
+  min-height: 1.5em;
+  text-align: center;
+}
+
+.result strong {
+  color: #2dd4bf;
+  font-size: 1.4rem;
+}

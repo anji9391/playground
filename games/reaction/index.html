@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Reaction Test</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">Reaction Test</span>
+      <span class="score" id="barScore">—</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <div class="game-main">
+      <button type="button" class="arena" id="arena">
+        <span id="arenaText">Click Play, then tap here</span>
+      </button>
+      <p class="result" id="result"></p>
+    </div>
+    <p class="hint">Wait for green, then click as fast as you can</p>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

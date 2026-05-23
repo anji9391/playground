@@ -1,0 +1,39 @@
+.msg {
+  margin: 0 0 1rem;
+  color: #94a3b8;
+  min-height: 1.4em;
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: min(88vw, 280px);
+  margin-bottom: 1.25rem;
+}
+
+.pad-btn {
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  opacity: 0.45;
+  transition: opacity 0.1s, transform 0.1s, filter 0.1s;
+  box-shadow: inset 0 -6px 0 rgba(0, 0, 0, 0.25);
+}
+
+.pad-btn.green { background: #22c55e; }
+.pad-btn.red { background: #ef4444; }
+.pad-btn.yellow { background: #eab308; }
+.pad-btn.blue { background: #3b82f6; }
+
+.pad-btn.lit {
+  opacity: 1;
+  transform: scale(1.04);
+  filter: brightness(1.3);
+  box-shadow: 0 0 24px currentColor;
+}
+
+.pad-btn:disabled {
+  cursor: default;
+}

@@ -1,0 +1,239 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap");
+
+:root {
+  font-family: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --bar-h: 48px;
+  --accent: #2dd4bf;
+  --surface: rgba(18, 26, 40, 0.92);
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #070b12;
+  color: #f8fafc;
+}
+
+.game-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: var(--bar-h);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(45, 212, 191, 0.15);
+}
+
+.game-bar a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.15s;
+}
+
+.game-bar a:hover {
+  opacity: 0.8;
+}
+
+.game-bar .title {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.game-bar .score {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  min-width: 3rem;
+  text-align: right;
+}
+
+.controls-bar {
+  position: fixed;
+  top: var(--bar-h);
+  left: 0;
+  right: 0;
+  z-index: 9;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.75rem;
+  background: rgba(12, 18, 28, 0.95);
+  border-bottom: 1px solid #1e293b;
+}
+
+.hud-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.hud-stat {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.hud-stat span {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.hud-stat strong {
+  font-size: 1rem;
+  color: #f1f5f9;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud-btns {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.hud-btns .btn {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.hud-btn-play {
+  background: #22c55e;
+  color: #052e16;
+}
+
+.hud-btn-pause {
+  background: #f97316;
+  color: #fff;
+}
+
+body.has-hud canvas#game {
+  top: calc(var(--bar-h) + 44px);
+  height: calc(100% - var(--bar-h) - 44px);
+}
+
+body.has-hud .game-main {
+  top: calc(var(--bar-h) + 44px);
+  height: calc(100% - var(--bar-h) - 44px);
+}
+
+body.has-hud .snake-wrap {
+  top: calc(var(--bar-h) + 44px);
+}
+
+.game-main {
+  position: fixed;
+  top: var(--bar-h);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas#game {
+  position: fixed;
+  top: var(--bar-h);
+  left: 0;
+  width: 100%;
+  height: calc(100% - var(--bar-h));
+  touch-action: none;
+}
+
+.btn {
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2dd4bf, #14b8a6);
+  color: #042f2e;
+  box-shadow: 0 4px 16px rgba(45, 212, 191, 0.35);
+}
+
+.btn-ghost {
+  background: #1e293b;
+  color: #e2e8f0;
+  border: 1px solid #334155;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background: rgba(7, 11, 18, 0.82);
+  backdrop-filter: blur(8px);
+  text-align: center;
+  padding: 1rem;
+  z-index: 20;
+  animation: fade-in 0.25s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay h2 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.overlay p {
+  margin: 0;
+  color: #94a3b8;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+.hint {
+  position: fixed;
+  bottom: 0.5rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #64748b;
+  margin: 0;
+  pointer-events: none;
+}

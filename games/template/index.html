@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>My Game</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">My Game</span>
+      <span class="score">0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <canvas id="game"></canvas>
+    <div id="overlay" class="overlay">
+      <h2>My Game</h2>
+      <p>Press Play to start.</p>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

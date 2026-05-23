@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>2048</title>
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="has-hud">
+    <div class="game-bar">
+      <a href="../../index.html">← Lobby</a>
+      <span class="title">2048</span>
+      <span class="score" id="score">0</span>
+    </div>
+    <div class="controls-bar" data-game-hud></div>
+    <div class="game-main">
+      <div class="board-wrap">
+        <div class="grid-bg" id="gridBg"></div>
+        <div class="grid-tiles" id="tiles"></div>
+      </div>
+    </div>
+    <p class="hint">Arrow keys to slide tiles</p>
+    <div id="overlay" class="overlay hidden">
+      <h2 id="overlayTitle">You win!</h2>
+      <p id="overlayMsg">Reached 2048!</p>
+      <button type="button" class="btn btn-primary" id="continue">Keep playing</button>
+      <button type="button" class="btn btn-ghost" id="restart">New game</button>
+    </div>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

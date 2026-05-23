@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <title>Simon Says</title>
+
+    <link rel="stylesheet" href="../../shared/game-shell.css" />
+
+    <link rel="stylesheet" href="style.css" />
+
+  </head>
+
+  <body class="has-hud">
+
+    <div class="game-bar">
+
+      <a href="../../index.html">← Lobby</a>
+
+      <span class="title">Simon Says</span>
+
+      <span class="score" id="level">Level 0</span>
+
+    </div>
+
+    <div class="controls-bar" data-game-hud></div>
+
+    <div class="game-main">
+
+      <p class="msg" id="msg">Press Play to start</p>
+
+      <div class="pad" id="pad">
+
+        <button type="button" class="pad-btn green" data-i="0" aria-label="Green"></button>
+
+        <button type="button" class="pad-btn red" data-i="1" aria-label="Red"></button>
+
+        <button type="button" class="pad-btn yellow" data-i="2" aria-label="Yellow"></button>
+
+        <button type="button" class="pad-btn blue" data-i="3" aria-label="Blue"></button>
+
+      </div>
+
+      <button type="button" class="btn btn-primary" id="start">Start</button>
+
+    </div>
+
+    <div id="overlay" class="overlay hidden">
+
+      <h2>Game Over</h2>
+
+      <p id="final">Level 0</p>
+
+      <button type="button" class="btn btn-primary" id="retry">Try again</button>
+
+    </div>
+
+    <script type="module" src="game.js"></script>
+
+  </body>
+
+</html>
+
